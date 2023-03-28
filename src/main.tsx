@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     element: < Mentors />,
   },
   {
-    path: 'chat/:mentor',
+    path: 'chat/:mentorName',
     element: <Chat />
   },
 ]);
