@@ -68,14 +68,14 @@ function Chat() {
       return (
         <div key={message.content.substring(0, 20)} className="w-full flex flex-row justify-start items-start p-3">
           <img className="w-auto h-10 shrink-0 rounded-full shadow-lg bg-slate-200" src="/src/assets/user.png" alt="user" />
-          <div className="pl-3">{message.content}</div>
+          <div className="pl-3 whitespace-pre-wrap">{message.content}</div>
         </div>
       );
     } else if (message.role === 'assistant') {
       return (
         <div key={message.content.substring(0, 20)} className="w-full flex flex-row justify-start items-start bg-slate-100 p-3">
           <img className="w-auto h-10 shrink-0 rounded-full shadow-lg" src={`/src/assets/${mentor?.imageUrl}`} alt={mentor?.name} />
-          <div className="pl-3">{message.content}</div>
+          <div className="pl-3 whitespace-pre-wrap">{message.content}</div>
         </div>
       );
     } else {
