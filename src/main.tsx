@@ -11,7 +11,7 @@ import Mentors from './pages/Mentors';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: < Mentors />,
+    element: <Mentors />,
   },
   {
     path: 'chat/:mentorName',

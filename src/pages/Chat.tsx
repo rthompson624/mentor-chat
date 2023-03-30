@@ -1,16 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom"
 import { IMentor, IMessage } from "../shared/interfaces";
 import { MENTORS } from "../shared/utils";
 import { Configuration, OpenAIApi } from "openai";
 import { MUMS_THE_WORD } from "../shared/utils";
+import Navbar from "../components/Navbar";
 
 function Chat() {
   const [prompt, setPrompt] = useState<string>('');
   const [mentor, setMentor] = useState<IMentor>();
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
-
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const promptInputRef = useRef<null | HTMLInputElement>(null);
   const { mentorName } = useParams();
 
   const configuration = new Configuration({
@@ -24,6 +26,11 @@ function Chat() {
     const systemMessage = `You are a helpful assistant in the voice of ${mentorName}`;
     setMessages([{ role: 'system', content: systemMessage }]);
   }, [mentorName]);
+
+  useEffect(() => {
+    promptInputRef.current?.focus();
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [fetching, messages]);
 
   function handlePromptKeyDown(key: string) {
     if (key === 'Enter') {
@@ -80,8 +87,9 @@ function Chat() {
   });
 
   return (
-    <div className='flex flex-col justify-start items-center h-screen'>
-      <div className="overflow-y-auto w-full md:w-5/6 max-w-2xl pb-16">
+    <div className='md:w-5/6 max-w-2xl m-auto flex flex-col justify-start items-center h-screen'>
+      <Navbar showHomeLink={true} />
+      <div className="w-full overflow-y-auto pb-16 md:pb-24">
         <div className="w-full flex flex-row justify-start items-start bg-slate-100 p-3">
           <img className="w-auto h-10 shrink-0 rounded-full shadow-lg" src={`/src/assets/${mentor?.imageUrl}`} alt={mentor?.name} />
           <div className="pl-3">How can I help you, my friend?</div>
@@ -97,12 +105,14 @@ function Chat() {
             </div>
           </div>
         }
+        <div ref={messagesEndRef}></div>
       </div>
       <div className="w-full flex flex-row justify-center items-center absolute inset-x-0 bottom-0 py-3 md:py-6 bg-white">
         <input
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={(e) => handlePromptKeyDown(e.key)}
+          ref={promptInputRef}
           className='placeholder:italic placeholder:text-slate-400 block bg-white w-2/3 md:w-5/6 max-w-xl border border-slate-300 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1'
           type='text'
           placeholder='Enter prompt...'
@@ -114,4 +124,4 @@ function Chat() {
   );
 }
 
-export default Chat
+export default Chat;

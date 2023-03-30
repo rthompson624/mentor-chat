@@ -8,4 +8,4 @@ export const MENTORS: IMentor[] = [
   { name: 'Buddha', imageUrl: 'buddha.jpg' },
 ];
 
-export const MUMS_THE_WORD: string = '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';
+export const MUMS_THE_WORD: string = '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';
