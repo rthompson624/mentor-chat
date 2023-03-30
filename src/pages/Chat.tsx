@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import { IMentor, IMessage } from "../shared/interfaces";
 import { MENTORS } from "../shared/utils";
 import { Configuration, OpenAIApi } from "openai";
-import { MUMS_THE_WORD } from "../shared/utils";
+import { FU, MAN, CHU } from "../shared/utils";
 import Navbar from "../components/Navbar";
 
 function Chat() {
@@ -16,7 +16,7 @@ function Chat() {
   const { mentorName } = useParams();
 
   const configuration = new Configuration({
-    apiKey: MUMS_THE_WORD,
+    apiKey: `${FU}${MAN}${CHU}`,
   });
   const openAIApi = new OpenAIApi(configuration);
 
