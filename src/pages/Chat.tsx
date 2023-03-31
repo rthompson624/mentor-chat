@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom"
 import { IMentor, IMessage } from "../shared/interfaces";
 import { MENTORS } from "../shared/utils";
 import { Configuration, OpenAIApi } from "openai";
-import { FU, MAN, CHU } from "../shared/utils";
+import { OPENAI_API_KEY } from "../shared/utils";
 import Navbar from "../components/Navbar";
+import ReactMarkdown from "react-markdown";
 
 function Chat() {
   const [prompt, setPrompt] = useState<string>('');
@@ -16,7 +17,7 @@ function Chat() {
   const { mentorName } = useParams();
 
   const configuration = new Configuration({
-    apiKey: `${FU}${MAN}${CHU}`,
+    apiKey: OPENAI_API_KEY,
   });
   const openAIApi = new OpenAIApi(configuration);
 
@@ -75,7 +76,9 @@ function Chat() {
       return (
         <div key={message.content.substring(0, 20)} className="w-full flex flex-row justify-start items-start bg-slate-100 p-3">
           <img className="w-auto h-10 shrink-0 rounded-full shadow-lg" src={`/src/assets/${mentor?.imageUrl}`} alt={mentor?.name} />
-          <div className="pl-3 whitespace-pre-wrap">{message.content}</div>
+          <div className="pl-3 prose max-w-none overflow-x-auto">
+            <ReactMarkdown>{message.content}</ReactMarkdown>
+          </div>
         </div>
       );
     } else {
@@ -87,7 +90,7 @@ function Chat() {
   });
 
   return (
-    <div className='md:w-5/6 max-w-2xl m-auto flex flex-col justify-start items-center h-screen'>
+    <div className='md:w-5/6 max-w-5xl m-auto flex flex-col justify-start items-center h-screen'>
       <Navbar showHomeLink={true} />
       <div className="w-full overflow-y-auto pb-16 md:pb-24">
         <div className="w-full flex flex-row justify-start items-start bg-slate-100 p-3">
