@@ -6,6 +6,8 @@ import { Configuration, OpenAIApi } from "openai";
 import { OPENAI_API_KEY } from "../shared/utils";
 import Navbar from "../components/Navbar";
 import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function Chat() {
   const [prompt, setPrompt] = useState<string>('');
@@ -77,7 +79,27 @@ function Chat() {
         <div key={message.content.substring(0, 20)} className="w-full flex flex-row justify-start items-start bg-slate-100 p-3">
           <img className="w-auto h-10 shrink-0 rounded-full shadow-lg" src={`/src/assets/${mentor?.imageUrl}`} alt={mentor?.name} />
           <div className="pl-3 prose max-w-none overflow-x-auto">
-            <ReactMarkdown>{message.content}</ReactMarkdown>
+            <ReactMarkdown
+              children={message.content}
+              components={{
+                code({ node, inline, className, children, style, ...props }) {
+                  const match = /language-(\w+)/.exec(className || '')
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      children={String(children).replace(/\n$/, '')}
+                      style={a11yDark}
+                      language={match[1]}
+                      PreTag="div"
+                      {...props}
+                    />
+                  ) : (
+                    <code className={className} {...props}>
+                      {children}
+                    </code>
+                  )
+                }
+              }}
+            />
           </div>
         </div>
       );
