@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom"
 import { IMentor, IMessage } from "../shared/interfaces";
 import { MENTORS } from "../shared/utils";
 import { MENTOR_CHAT_API_URL } from "../shared/utils";
-import Navbar from "../components/Navbar";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -112,8 +111,20 @@ function Chat() {
 
   return (
     <div className='md:w-5/6 max-w-5xl m-auto flex flex-col justify-start items-center h-screen'>
-      <Navbar showHomeLink={true} />
-      <div className="w-full overflow-y-auto pb-16 md:pb-24">
+      <div className="w-full flex flex-row justify-center items-center sticky top-0 py-3 md:py-4 bg-white border-b-2 border-sky-300">
+        <input
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          onKeyDown={(e) => handlePromptKeyDown(e.key)}
+          ref={promptInputRef}
+          className='placeholder:italic placeholder:text-slate-400 block bg-white w-2/3 md:w-5/6 max-w-xl border border-slate-300 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1'
+          type='text'
+          placeholder='Enter prompt...'
+          disabled={fetching}
+        />
+        <button onClick={() => submitPrompt()} disabled={fetching} className="bg-sky-500 hover:bg-sky-700 text-white rounded-2xl w-16 h-8 ml-3">Send</button>
+      </div>
+      <div className="w-full overflow-y-auto">
         <div className="w-full flex flex-row justify-start items-start bg-slate-100 p-3">
           <img className="w-auto h-10 shrink-0 rounded-full shadow-lg" src={`/images/${mentor?.imageUrl}`} alt={mentor?.name} />
           <div className="pl-3">How can I help you, my friend?</div>
@@ -130,19 +141,6 @@ function Chat() {
           </div>
         }
         <div ref={messagesEndRef}></div>
-      </div>
-      <div className="w-full flex flex-row justify-center items-center absolute inset-x-0 bottom-0 py-3 md:py-6 bg-white">
-        <input
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          onKeyDown={(e) => handlePromptKeyDown(e.key)}
-          ref={promptInputRef}
-          className='placeholder:italic placeholder:text-slate-400 block bg-white w-2/3 md:w-5/6 max-w-xl border border-slate-300 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1'
-          type='text'
-          placeholder='Enter prompt...'
-          disabled={fetching}
-        />
-        <button onClick={() => submitPrompt()} disabled={fetching} className="bg-sky-500 hover:bg-sky-700 text-white rounded-2xl w-16 h-8 ml-3">Send</button>
       </div>
     </div>
   );
