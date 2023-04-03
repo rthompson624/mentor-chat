@@ -67,14 +67,14 @@ function Chat() {
   const messageComponents = messages.slice(1).map(message => {
     if (message.role === 'user') {
       return (
-        <div key={message.content.substring(0, 20)} className="w-full flex flex-row justify-start items-start p-3">
+        <div key={message.content.substring(0, 20)} className="w-full flex flex-row justify-start items-start p-3 z-0">
           <img className="w-auto h-10 shrink-0 rounded-full shadow-lg bg-slate-200" src="/images/user.png" alt="user" />
           <div className="pl-3 whitespace-pre-wrap">{message.content}</div>
         </div>
       );
     } else if (message.role === 'assistant') {
       return (
-        <div key={message.content.substring(0, 50)} className="w-full flex flex-row justify-start items-start bg-slate-100 p-3">
+        <div key={message.content.substring(0, 50)} className="w-full flex flex-row justify-start items-start bg-slate-100 p-3 z-0">
           <img className="w-auto h-10 shrink-0 rounded-full shadow-lg" src={`/images/${mentor?.imageUrl}`} alt={mentor?.name} />
           <div className="pl-3 prose max-w-none overflow-x-auto">
             <ReactMarkdown
@@ -111,7 +111,7 @@ function Chat() {
 
   return (
     <div className='md:w-5/6 max-w-5xl m-auto flex flex-col justify-start items-center h-screen'>
-      <div className="w-full flex flex-row justify-center items-center sticky top-0 py-3 md:py-4 bg-white border-b-2 border-gray-700">
+      <div className="w-full flex flex-row justify-center items-center sticky top-0 py-3 md:py-4 bg-white border-b-2 border-gray-700 z-50">
         <input
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
@@ -125,13 +125,13 @@ function Chat() {
         <button onClick={() => submitPrompt()} disabled={fetching} className="bg-sky-500 hover:bg-sky-700 text-white rounded-2xl w-16 h-8 ml-3">Send</button>
       </div>
       <div className="w-full overflow-y-auto">
-        <div className="w-full flex flex-row justify-start items-start bg-slate-100 p-3">
+        <div className="w-full flex flex-row justify-start items-start bg-slate-100 p-3 z-0">
           <img className="w-auto h-10 shrink-0 rounded-full shadow-lg" src={`/images/${mentor?.imageUrl}`} alt={mentor?.name} />
           <div className="pl-3">How can I help you, my friend?</div>
         </div>
         {messageComponents}
         {fetching &&
-          <div className="animate-pulse flex p-3">
+          <div className="animate-pulse flex p-3 z-0">
             <div className="rounded-full bg-slate-200 h-10 w-10"></div>
             <div className="flex-1 space-y-2 py-1 pl-3">
               <div className="h-2 bg-slate-200 rounded"></div>
