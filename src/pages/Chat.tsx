@@ -111,7 +111,7 @@ function Chat() {
 
   return (
     <div className='md:w-5/6 max-w-5xl m-auto flex flex-col justify-start items-center h-screen'>
-      <div className="w-full flex flex-row justify-center items-center sticky top-0 py-3 md:py-4 bg-white border-b-2 border-sky-300">
+      <div className="w-full flex flex-row justify-center items-center sticky top-0 py-3 md:py-4 bg-white border-b-2 border-gray-700">
         <input
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
