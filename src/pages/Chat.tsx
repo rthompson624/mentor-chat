@@ -39,6 +39,7 @@ function Chat() {
       setFetching(true);
       setPrompt('');
       const newMessages: IMessage[] = [...messages, { role: 'user', content: prompt }];
+      setMessages(newMessages);
       try {
         const requestOptions = {
           method: 'POST',
