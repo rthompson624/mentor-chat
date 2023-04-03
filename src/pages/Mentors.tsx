@@ -6,9 +6,11 @@ function Mentors() {
   const mentors = MENTORS.map(mentor => <Mentor mentor={mentor} key={mentor.name} />);
 
   return (
-    <div className='md:w-5/6 max-w-5xl m-auto flex flex-col justify-start items-center h-screen pb-2 overflow-y-auto'>
+    <div className='md:w-5/6 max-w-5xl m-auto flex flex-col justify-start items-center h-screen'>
       <Navbar showHomeLink={false} />
-      {mentors}
+      <div className="overflow-y-auto pb-2">
+        {mentors}
+      </div>
     </div>
   );
 }
