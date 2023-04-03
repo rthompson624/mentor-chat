@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom"
 import { IMentor, IMessage } from "../shared/interfaces";
 import { MENTORS } from "../shared/utils";
-import { Configuration, OpenAIApi } from "openai";
-import { OPENAI_API_KEY } from "../shared/utils";
+import { MENTOR_CHAT_API_URL } from "../shared/utils";
 import Navbar from "../components/Navbar";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -17,11 +16,6 @@ function Chat() {
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const promptInputRef = useRef<null | HTMLInputElement>(null);
   const { mentorName } = useParams();
-
-  const configuration = new Configuration({
-    apiKey: OPENAI_API_KEY,
-  });
-  const openAIApi = new OpenAIApi(configuration);
 
   useEffect(() => {
     const mentor = MENTORS.find(iter => iter.name === mentorName);
@@ -47,9 +41,14 @@ function Chat() {
       setPrompt('');
       const newMessages: IMessage[] = [...messages, { role: 'user', content: prompt }];
       try {
-        const response = await openAIApi.createChatCompletion({ model: 'gpt-3.5-turbo', messages: newMessages });
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: newMessages })
+        };
+        const response = await fetch(`${MENTOR_CHAT_API_URL}/createChatCompletion`, requestOptions);
+        const responseMessage: IMessage = await response.json();
         setFetching(false);
-        const responseMessage: IMessage = response.data.choices[0].message as IMessage;
         if (!responseMessage) {
           throw 'No message returned';
         }
@@ -76,7 +75,7 @@ function Chat() {
       );
     } else if (message.role === 'assistant') {
       return (
-        <div key={message.content.substring(0, 20)} className="w-full flex flex-row justify-start items-start bg-slate-100 p-3">
+        <div key={message.content.substring(0, 50)} className="w-full flex flex-row justify-start items-start bg-slate-100 p-3">
           <img className="w-auto h-10 shrink-0 rounded-full shadow-lg" src={`/src/assets/${mentor?.imageUrl}`} alt={mentor?.name} />
           <div className="pl-3 prose max-w-none overflow-x-auto">
             <ReactMarkdown

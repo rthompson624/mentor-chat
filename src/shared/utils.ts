@@ -8,4 +8,4 @@ export const MENTORS: IMentor[] = [
   { name: 'Buddha', imageUrl: 'buddha.jpg' },
 ];
 
-export const OPENAI_API_KEY: string = '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';
+export const MENTOR_CHAT_API_URL: string = import.meta.env.VITE_MENTOR_CHAT_API_URL;
