@@ -6,6 +6,8 @@ import { MENTOR_CHAT_API_URL } from "../shared/utils";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { FaHome } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function Chat() {
   const [prompt, setPrompt] = useState<string>('');
@@ -111,19 +113,24 @@ function Chat() {
   });
 
   return (
-    <div className='md:w-5/6 max-w-5xl m-auto flex flex-col justify-start items-center h-screen'>
-      <div className="w-full flex flex-row justify-center items-center sticky top-0 py-3 md:py-4 bg-white border-b-2 border-gray-700 z-50">
-        <input
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          onKeyDown={(e) => handlePromptKeyDown(e.key)}
-          ref={promptInputRef}
-          className='placeholder:italic placeholder:text-slate-400 block bg-white w-2/3 md:w-5/6 max-w-xl border border-slate-300 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1'
-          type='text'
-          placeholder='Enter prompt...'
-          disabled={fetching}
-        />
-        <button onClick={() => submitPrompt()} disabled={fetching} className="bg-sky-500 hover:bg-sky-700 text-white rounded-2xl w-16 h-8 ml-3">Send</button>
+    <div className='md:w-5/6 max-w-5xl m-auto flex flex-col justify-start items-center h-full'>
+      <div className="w-full flex flex-row justify-start items-center sticky top-0 py-3 md:py-4 bg-white border-b-2 border-gray-700 z-50">
+        <Link to='/' className="pl-3">
+          <FaHome className='text-3xl cursor-pointer' />
+        </Link>
+        <div className="w-full flex flex-row justify-center items-center">
+          <input
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            onKeyDown={(e) => handlePromptKeyDown(e.key)}
+            ref={promptInputRef}
+            className='placeholder:italic placeholder:text-slate-400 block bg-white w-2/3 md:w-5/6 max-w-xl border border-slate-300 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1'
+            type='text'
+            placeholder='Enter prompt...'
+            disabled={fetching}
+          />
+          <button onClick={() => submitPrompt()} disabled={fetching} className="bg-sky-500 hover:bg-sky-700 text-white rounded-2xl w-16 h-8 ml-3">Send</button>
+        </div>
       </div>
       <div className="w-full overflow-y-auto">
         <div className="w-full flex flex-row justify-start items-start bg-slate-100 p-3 z-0">
