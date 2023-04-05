@@ -26,7 +26,7 @@ function Chat() {
   }, [mentorName]);
 
   useEffect(() => {
-    promptInputRef.current?.focus();
+    promptInputRef.current?.blur();
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [fetching, messages]);
 
