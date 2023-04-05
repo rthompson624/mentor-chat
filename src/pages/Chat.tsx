@@ -139,9 +139,9 @@ function Chat() {
         </div>
         {messageComponents}
         {fetching &&
-          <div className="animate-pulse flex p-3 z-0">
-            <div className="rounded-full bg-slate-200 h-10 w-10"></div>
-            <div className="flex-1 space-y-2 py-1 pl-3">
+          <div className="flex p-3 z-0">
+            <img className="w-auto h-10 shrink-0 rounded-full shadow-lg" src={`/images/${mentor?.imageUrl}`} alt={mentor?.name} />
+            <div className="animate-pulse flex-1 space-y-2 py-1 pl-3">
               <div className="h-2 bg-slate-200 rounded"></div>
               <div className="h-2 bg-slate-200 rounded"></div>
               <div className="h-2 bg-slate-200 rounded"></div>
